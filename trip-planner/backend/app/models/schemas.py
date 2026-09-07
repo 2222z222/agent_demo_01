@@ -14,7 +14,7 @@ class TripRequest(BaseModel):
     travel_days: int = Field(..., description="旅行天数", ge=1, le=30, examples=3)
     transportation: str = Field(..., description="交通形式", examples="公共交通")
     accommodation: str = Field(..., description="住宿偏好", examples="经济型酒店")
-    preference: List[str] = Field(default=[], description="旅行偏好标签", examples=["历史文化", "美食"])
+    preferences: List[str] = Field(default=[], description="旅行偏好标签", examples=["历史文化", "美食"])
     free_text_input: Optional[str] = Field(default="", description="额外要求", examples="希望多安排一些博物馆")
 
     model_config = ConfigDict(
