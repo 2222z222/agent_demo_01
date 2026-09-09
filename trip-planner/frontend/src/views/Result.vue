@@ -829,14 +829,30 @@ const restoreMap = () => {
   }
 }
 
-// 初始化地图
+//初始化地图
 const initMap = async () => {
   try {
+    const amapKey = import.meta.env.VITE_AMAP_WEB_JS_KEY?.trim()
+    const securityCode = import.meta.env.VITE_AMAP_SECURITY_CODE?.trim()
+
+    if (!amapKey) {
+      throw new Error('未读取到 VITE_AMAP_WEB_JS_KEY')
+    }
+
+    if (!securityCode) {
+      throw new Error('未读取到 VITE_AMAP_SECURITY_CODE')
+    }
+
+    ;(window as any)._AMapSecurityConfig = {
+      securityJsCode: securityCode
+    }
+
     const AMap = await AMapLoader.load({
-      key: import.meta.env.VITE_AMAP_WEB_JS_KEY,  // 高德地图Web端(JS API) Key
+      key: amapKey,
       version: '2.0',
       plugins: ['AMap.Marker', 'AMap.Polyline', 'AMap.InfoWindow']
     })
+
 
     // 创建地图实例
     map = new AMap.Map('amap-container', {
